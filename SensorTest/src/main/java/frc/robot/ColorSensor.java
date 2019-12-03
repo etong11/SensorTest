@@ -15,8 +15,6 @@ import java.nio.ByteBuffer;
  * https://docs.broadcom.com/docs/APDS-9151-DS
  */
 public class ColorSensor {
-    private I2C sensor;    
-
     /*
     private final static int MAIN_CTRL=0x00;
     private final static int PART_ID=0x06;
@@ -79,43 +77,49 @@ public class ColorSensor {
     private final static int WEN   = 0b00001000;
     private final static int AIEN  = 0b00010000;
     private final static int PIEN  = 0b00100000;
-    
-    
 
+    private ByteBuffer buffer;
+    private I2C sensor;    
 
     public ColorSensor(I2C.Port port) {
         sensor = new I2C(port, 0x39); //port, I2C address    
 
         sensor.write(0x00, 0b00000011); //power on, color sensor on
+        buffer=ByteBuffer.allocate(5);
     }
 
-    protected int readWordRegister(int address) {
-  ByteBuffer buf = ByteBuffer.allocate(2);
-  sensor.read(COMMAND_REGISTER_BIT | MULTI_BYTE_BIT | address, 2, buf);
-  buf.order(ByteOrder.LITTLE_ENDIAN);
-  return buf.getShort(0);
-}
+/*protected int readWordRegister(int address) {
+    ByteBuffer buf = ByteBuffer.allocate(1);
+    sensor.read(COMMAND_REGISTER_BIT | MULTI_BYTE_BIT | address, 2, buf);
+    buf.order(ByteOrder.LITTLE_ENDIAN);
+    return buf.getShort(0);
+    }
+    */
 
 public int red() {
- return readWordRegister(LS_DATA_RED_1);
+    sensor.read(RDATA_REGISTER,2,buffer);
+    return buffer.get(0);
 }
 
 public int green() {
- return readWordRegister(LS_DATA_GREEN_1);
+    sensor.read(GDATA_REGISTER,2,buffer);
+    return buffer.get(0);
 }
 
 public int blue() {
- return readWordRegister(BDATA_REGISTER);
+    sensor.read(BDATA_REGISTER,2,buffer);
+    return buffer.get(0);
 }
 
 public int clear() {
- return readWordRegister(CDATA_REGISTER);
-}
+    sensor.read(CDATA_REGISTER,2,buffer);
+    return buffer.get(0);}
 
 public int proximity() {
- return readWordRegister(PDATA_REGISTER);
+    sensor.read(PDATA_REGISTER,2,buffer);
+    return buffer.get(0);}
 }
-}
+
 /*    protected final static int CMD = 0x80;
 protected final static int MULTI_BYTE_BIT = 0x20;
 protected final static int ENABLE_REGISTER  = 0x00;
