@@ -37,7 +37,7 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 public class Robot extends SampleRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
-
+ /*
   private final DifferentialDrive m_robotDrive
       = new DifferentialDrive(new PWMVictorSPX(0), new PWMVictorSPX(1));
   private final Joystick m_stick = new Joystick(0);
@@ -46,16 +46,18 @@ public class Robot extends SampleRobot {
   private Ultrasonic ultra;
   //private AnalogInput exampleAnalog;
   //private int bits;
+*/
   private ColorSensor color_sensor;
 
   private static final int ULTRASONIC_ECHO_PULSE_OUTPUT=1;
   private static final int ULTRASONIC_TRIGGER_PULSE_INPUT=1;
 
   public Robot() {
-    m_robotDrive.setExpiration(0.1);
+    /*m_robotDrive.setExpiration(0.1);
     ultra = new Ultrasonic(ULTRASONIC_ECHO_PULSE_OUTPUT, ULTRASONIC_TRIGGER_PULSE_INPUT); // creates the ultra object andassigns ultra to be an ultrasonic sensor which uses DigitalOutput 1 for 
         // the echo pulse and DigitalInput 1 for the trigger pulse
     //exampleAnalog = new AnalogInput(0);
+    */
     color_sensor=new ColorSensor(0);
   }
 
@@ -98,7 +100,8 @@ public class Robot extends SampleRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto modes", m_chooser);
-    ultra.setAutomaticMode(true); // turns on automatic mode
+    //ultra.setAutomaticMode(true); // turns on automatic mode
+
   }
 
   /**
@@ -200,6 +203,7 @@ public class Robot extends SampleRobot {
    */
   @Override
   public void test() {
+    /*
     //Moves/repositions the robot then puts a hatch on
     if (!detectTape()){
       m_Drivetrain.drive(0,0.2); //time this
@@ -207,6 +211,7 @@ public class Robot extends SampleRobot {
     else {
       m_Drivetrain.drive(0);
       m_hatch.extendHatch();
-    }
+    } */
+    System.out.println(color_sensor.red());
   }
 }
